@@ -1,11 +1,6 @@
 ﻿using UnityEngine;
 using HarmonyLib;
-using UnboundLib;
-using UnboundLib.Networking;
-using Photon.Pun;
-using UnityEngine.Assertions;
 using System.Linq;
-using UnboundLib.Utils;
 using HiddenCards;
 
 [HarmonyPatch(typeof(CardChoice))]
