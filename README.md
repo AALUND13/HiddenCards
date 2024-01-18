@@ -1,2 +1,2 @@
 # Info
-Still a WIP gonna make module system look better, also gonna add more modules
+Has a toggle that host tells others to do
