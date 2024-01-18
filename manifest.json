@@ -1,14 +1,9 @@
 {
-  "name": "ModularEnhancement",
-  "version_number": "0.0.2",
-  "website_url": "https://github.com/Autuwumn/ModularEnhancement",
-  "description": "Cards that allow you to customize a little bit more",
+  "name": "Hidden Cards",
+  "version_number": "0.0.1",
+  "website_url": "https://github.com/Autuwumn/HiddenCards",
+  "description": "Hides your picking from enemies",
   "dependencies": [
-    "willis81808-UnboundLib-3.2.6",
-    "Pykess-ModdingUtils-0.4.6",
-    "Root-RarityLib-1.2.1",
-    "CrazyCoders-RarityBundle-0.0.0",
-    "willis81808-ModsPlus-1.6.2",
-    "Root-CardThemeLib-1.1.3"
+    "willis81808-UnboundLib-3.2.6"
   ]
 }
