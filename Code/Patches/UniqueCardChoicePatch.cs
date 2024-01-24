@@ -2,6 +2,9 @@
 using HarmonyLib;
 using System.Linq;
 using HiddenCards;
+using UnboundLib.Networking;
+using Photon.Pun;
+using UnboundLib;
 
 [HarmonyPatch(typeof(CardChoice))]
 public class UniqueCardChoicePatch
@@ -10,7 +13,6 @@ public class UniqueCardChoicePatch
     [HarmonyPostfix]
     public static void SpawnUniqueCard_Patch(ref GameObject __result, int ___pickrID, PickerType ___pickerType, Vector3 pos, Quaternion rot)
     {
-        // get currently picking player
         Player player;
         if (___pickerType == PickerType.Team)
         {
@@ -20,12 +22,22 @@ public class UniqueCardChoicePatch
         {
             player = PlayerManager.instance.players[___pickrID];
         }
-        var hide = true;
-        foreach(var p in PlayerManager.instance.players.Where((p) => p.data.view.IsMine)) if (p.teamID == player.teamID) hide = false;
-        if(hide && HC.tempEnable)
+        if(HC.tempEnable)
         {
-            __result.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-            __result.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<CanvasGroup>().enabled = false;
+            NetworkingManager.RPC(typeof(UniqueCardChoicePatch), nameof(RPC_HideHiddenCards), __result.GetComponent<PhotonView>().ViewID, ___pickrID);
+        }
+    }
+
+    [UnboundRPC]
+    public static void RPC_HideHiddenCards(int targetCardID, int pickID)
+    {
+        var card = PhotonNetwork.GetPhotonView(targetCardID).gameObject;
+        Player me = PlayerManager.instance.players.Where((p) => p.data.view.IsMine).First();
+        Player picker = PlayerManager.instance.players.Where((p) => p.playerID == pickID).First();
+        if (me.teamID != picker.teamID) 
+        {
+            card.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            card.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<CanvasGroup>().enabled = false;
         }
     }
 }
