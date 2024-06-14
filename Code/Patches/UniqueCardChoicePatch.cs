@@ -36,8 +36,9 @@ public class UniqueCardChoicePatch
         Player picker = PlayerManager.instance.players.Where((p) => p.playerID == pickID).First();
         if (me.teamID != picker.teamID) 
         {
-            card.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
-            card.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<CanvasGroup>().enabled = false;
+            // CardInfoDisplayer should be every "CardBase" object
+            card.transform.GetComponentInChildren<CardInfoDisplayer>().transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            card.transform.GetComponentInChildren<CardInfoDisplayer>().transform.GetChild(0).GetChild(1).GetComponent<CanvasGroup>().enabled = false;
         }
     }
 }
